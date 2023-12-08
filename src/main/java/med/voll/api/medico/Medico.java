@@ -29,6 +29,8 @@ public class Medico {
     @Embedded
     private Endereco endereco;
 
+    private Boolean ativo;
+
     public Medico(DadosCadastroMedico req) {
         this.nome = req.nome();
         this.email = req.email();
@@ -36,5 +38,24 @@ public class Medico {
         this.crm = req.crm();
         this.especialidade = req.especialidade();
         this.endereco = new Endereco(req.endereco());
+        this.ativo = true;
+    }
+
+    public void atualizarInfo(DadosAtualizacaoMedico req) {
+        if (req.nome() != null) {
+            this.nome = req.nome();
+        }
+
+        if (req.telefone() != null) {
+            this.telefone = req.telefone();
+        }
+
+        if (req.endereco() != null) {
+            this.endereco.atualizarInfo(req.endereco());
+        }
+    }
+
+    public void inativar() {
+        this.ativo = false;
     }
 }

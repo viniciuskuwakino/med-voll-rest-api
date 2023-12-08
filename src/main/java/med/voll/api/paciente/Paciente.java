@@ -26,11 +26,33 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
+    private Boolean ativo;
+
+
     public Paciente(DadosCadastroPaciente req) {
         this.nome = req.nome();
         this.email = req.email();
         this.cpf = req.cpf();
         this.telefone = req.telefone();
         this.endereco = new Endereco(req.endereco());
+        this.ativo = true;
+    }
+
+    public void atualizarInfo(DadosAtualizacaoPaciente req) {
+        if (req.nome() != null) {
+            this.nome = req.nome();
+        }
+
+        if (req.telefone() != null) {
+            this.telefone = req.telefone();
+        }
+
+        if (req.endereco() != null) {
+            this.endereco.atualizarInfo(req.endereco());
+        }
+    }
+
+    public void inativar() {
+        this.ativo = false;
     }
 }
