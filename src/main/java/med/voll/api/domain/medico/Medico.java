@@ -1,44 +1,47 @@
-package med.voll.api.paciente;
+package med.voll.api.domain.medico;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.endereco.Endereco;
+import med.voll.api.domain.endereco.Endereco;
 
-@Table(name="pacientes")
-@Entity(name="Paciente")
+@Table(name = "medicos")
+@Entity(name = "Medico")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Paciente {
+public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
-    private String cpf;
+    private String crm;
     private String telefone;
+
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
 
     @Embedded
     private Endereco endereco;
 
     private Boolean ativo;
 
-
-    public Paciente(DadosCadastroPaciente req) {
+    public Medico(DadosCadastroMedico req) {
         this.nome = req.nome();
         this.email = req.email();
-        this.cpf = req.cpf();
         this.telefone = req.telefone();
+        this.crm = req.crm();
+        this.especialidade = req.especialidade();
         this.endereco = new Endereco(req.endereco());
         this.ativo = true;
     }
 
-    public void atualizarInfo(DadosAtualizacaoPaciente req) {
+    public void atualizarInfo(DadosAtualizacaoMedico req) {
         if (req.nome() != null) {
             this.nome = req.nome();
         }
